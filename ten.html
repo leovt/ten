@@ -1,4 +1,41 @@
-<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg" onwheel="wheel(evt)" width="100%" height="100%">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>My test page</title>
+    <style>
+      body {
+        height: 5000vh;
+        margin: 0;
+				background-color: black;
+      }
+
+      .line-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+			.power {
+				display: none;
+			}
+
+      svg {
+        display: inline-block;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="line-container">
+
+<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg" onwheel="wheel(evt)">
 
 	<rect x="-3" y="-3" width="6" height="6" fill="black" />
 
@@ -193,71 +230,45 @@
 	<text x="27" y="1.3" font-size="0.9" text-anchor="middle" fill="grey">27</text>
 	<path id="cursor" d="M0 0.6 1 3h-2Z" fill="red"/>
 	</g>
-
-	<style>
-		g.power {
-			display: none;
-		}
-	</style>
-
-	<script>//<![CDATA[
-	scale = 0;
-	cursor = document.getElementById("cursor");
-
-	function wheel(evt) {
-		let delta = evt.deltaY;
-		switch (evt.deltaMode) {
-		case WheelEvent.DOM_DELTA_PIXEL:
-			scale += delta * 0.001;
-			break;
-		case WheelEvent.DOM_DELTA_LINE:
-			scale += delta * 0.05;
-			break;
-		case WheelEvent.DOM_DELTA_PAGE:
-			scale += delta;
-			break;
-		}
-		update();
-	}
-	function update() {
-		if (scale < -35) {
-			scale = -35;
-		}
-		if (scale > 27) {
-			scale = 27;
-		}
-		cursor.setAttribute('transform', `translate(${scale} 0)`);
-		let result = document.getElementsByClassName('power');
-		for (i=0; i < result.length; i+=1) {
-			let el = result[i];
-			if (el.dataset.power < scale-3 || el.dataset.power > scale+1) {
-				el.setAttribute('style', '');
-			} else {
-				let op = Math.min(3+el.dataset.power-scale, 1, scale-el.dataset.power+1);
-				el.setAttribute('style', `display: initial; opacity:${op};`);
-				el.setAttribute('transform', `scale(${10 ** (el.dataset.power-scale)})`);
-			}
-		}
-	}
-	update();
-	function make_cursor_draggable() {
-		var is_dragging=false;
-		var svg = cursor.getRootNode();
-		var ruler = document.getElementById('ruler');
-		cursor.addEventListener('mousedown', (evt)=>{is_dragging=true;});
-		svg.addEventListener('mouseup', (evt)=>{is_dragging=false;});
-		svg.addEventListener('mousemove', (evt)=>{
-			if (is_dragging) {
-				evt.preventDefault();
-				var p = new DOMPoint();
-				p.x = evt.screenX
-				p.y = evt.screenY
-				p = p.matrixTransform(ruler.getScreenCTM().inverse());
-				scale = p.x;
-				update();
-			}
-		});
-	}
-	make_cursor_draggable();
-	//]]></script>
 </svg>
+</div>
+
+<script>//<![CDATA[
+cursor = document.getElementById("cursor");
+
+
+function update(scale) {
+	if (scale < -35) {
+		scale = -35;
+	}
+	if (scale > 27) {
+		scale = 27;
+	}
+	cursor.setAttribute('transform', `translate(${scale} 0)`);
+	let result = document.getElementsByClassName('power');
+	for (i=0; i < result.length; i+=1) {
+		let el = result[i];
+		if (el.dataset.power < scale-3 || el.dataset.power > scale+1) {
+			el.setAttribute('style', '');
+		} else {
+			let op = Math.min(3+el.dataset.power-scale, 1, scale-el.dataset.power+1);
+			el.setAttribute('style', `display: initial; opacity:${op};`);
+			el.setAttribute('transform', `scale(${10 ** (el.dataset.power-scale)})`);
+		}
+	}
+}
+update(0);
+window.addEventListener('scroll', () => {
+	let ratio = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+	scale = -35 + (27+35) * ratio;
+	update(scale);
+});
+function goto(scale) {
+	let ratio = (scale + 35) / (27 + 35)
+	document.body.scrollTop = ratio * (document.documentElement.scrollHeight - document.documentElement.clientHeight) - document.documentElement.scrollTop;
+}
+goto(0);
+
+//]]></script>
+</body>
+</html>
