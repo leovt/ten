@@ -439,17 +439,15 @@ function update(scale) {
 		}
 	}
 }
-update(0);
-window.addEventListener('scroll', () => {
+
+function scrollHandler() {
 	let ratio = (document.documentElement.scrollTop + document.body.scrollTop) / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
 	scale = -35 + (27+35) * ratio;
 	update(scale);
-});
-function goto(scale) {
-	let ratio = (scale + 35) / (27 + 35)
-	document.body.scrollTop = ratio * (document.documentElement.scrollHeight - document.documentElement.clientHeight) - document.documentElement.scrollTop;
 }
-goto(0);
+window.addEventListener('scroll', scrollHandler);
+scrollHandler();
+
 
 //]]></script>
 </body>
