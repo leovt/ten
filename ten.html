@@ -19,7 +19,6 @@
         height: 100%;
         text-align: center;
         overflow: hidden;
-        pointer-events: none;
       }
 
 			.power {
@@ -36,12 +35,23 @@
         display: inline-block;
         height: 100%;
       }
+
+    /* As SVG does not provide a default visual style for links,
+       it's considered best practice to add some */
+
+    @namespace svg url(http://www.w3.org/2000/svg);
+    /* Necessary to select only SVG <a> elements, and not also HTML's.
+       See warning below */
+
+    svg|a:link, svg|a:visited {
+      cursor: pointer;
+    }
     </style>
   </head>
   <body>
     <div class="line-container">
 
-<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg" onwheel="wheel(evt)">
+<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg">
 
 	<rect x="-3" y="-3" width="6" height="6" fill="black" />
 
@@ -76,6 +86,7 @@
 		<g transform="scale(1e21)" class="power" data-power="21">
 			<circle cx="0" cy="-0.25" r="0.4" fill="#111"/>
 			<circle cx="0" cy="-0.25" r="0.1" fill="#555"/>
+      <image x="-0.4" y="-0.65" width="0.8" height="0.8" href="https://www.nasa.gov/images/content/188404main_hurt_Milky_Way_2005-590_lg.jpg"/>
 			<text x="0" y="0.2" font-size="0.04" fill="#555" text-anchor="middle">The Milky Way</text>
 
 			<rect x="-0.5" y="-0.5" width="1" height="1" stroke-width="0.005" stroke="darkgrey" fill="none"/>
@@ -152,7 +163,8 @@
 
 	<g transform="scale(1e7)" class="power" data-power="7">
 
-		<circle cx="0" cy="0" r="0.6371" stroke="none" fill="blue"/>
+    <image href="img/globe_east_lrg.jpg" x="-0.728" y="-0.728" width="1.456" height="1.456"/>
+		<circle cx="0" cy="0" r="0.6371" stroke="red" fill="none" stroke-width="0.001"/>
 		<text x="0" y="0.56" font-size="0.04" fill="white" stroke="none" text-anchor="middle">Earth diameter 12'742 kilometers</text>
 
 		<circle cx="0" cy="0" r="0.6778" stroke-width="0.005" stroke="grey" fill="none"/>
@@ -430,9 +442,24 @@
 	<text x="21" y="1.3" font-size="0.9" text-anchor="middle" fill="grey">21</text>
 	<text x="24" y="1.3" font-size="0.9" text-anchor="middle" fill="grey">24</text>
 	<text x="27" y="1.3" font-size="0.9" text-anchor="middle" fill="grey">27</text>
+
+  <a href="#proton" style="cursor: pointer" transform="translate(-14.8 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Proton</text></a>
+  <a href="#atom" style="cursor: pointer" transform="translate(-10 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Atom</text></a>
+  <a href="#virus" style="cursor: pointer" transform="translate(-7 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Virus</text></a>
+  <a href="#venule" style="cursor: pointer" transform="translate(-3.8 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Venule</text></a>
+  <a href="#hand" style="cursor: pointer" transform="translate(-1 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Hand</text></a>
+  <a href="#earth" style="cursor: pointer" transform="translate(7 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Earth</text></a>
+  <a href="#galaxy" style="cursor: pointer" transform="translate(21 0)"><circle r="0.4" fill="white"/><text y="-1" text-anchor="middle" fill="white" font-size="0.8">Galaxy</text></a>
+
 	<path id="cursor" d="M0 0.6 1 3h-2Z" fill="red"/>
 	</g>
 </svg>
+</div>
+<div id="proton" class="sourceinfo" style="top:1600vh;">
+  <h1>Proton</h1>
+</div>
+<div id="atom" class="sourceinfo" style="top:1980vh;">
+  <h1>Hydrogen Atom</h1>
 </div>
 <div id="virus" class="sourceinfo" style="top:2218vh;">
   <h1><a href="https://commons.wikimedia.org/wiki/File:Rhinovirus_isosurface.png">Rhinovirus isosurface</a></h1>
@@ -445,6 +472,17 @@
 <div id="hand" class="sourceinfo" style="top:2700vh;">
   <h1><a href=https://www.pngplay.com/image/18249 target="_blank">One Hand Transparent File</a></h1>
   <p>found on pngplay</p>
+</div>
+<div id="earth" class="sourceinfo" style="top:3320vh;">
+  <h1><a href="https://visibleearth.nasa.gov/images/2181/the-blue-marble/2182l" target="_blank">The Blue Marble</a></h1>
+  <p>This image originally appeared in the NASA Earth Observatory story The Blue Marble.
+  Image by Reto Stöckli, Render by Robert Simmon. Based on data from the MODIS Science Team</p>
+  <p>Using a collection of satellite images and data, scientists and visualizers stitched together months
+    of observations of Earth’s land surface, oceans, sea ice, and clouds into a seamless, true-color mosaic.</p>
+</div>
+<div id="galaxy" class="sourceinfo" style="top:4420vh;">
+  <h1><a href="https://www.nasa.gov/mission_pages/GLAST/science/milky_way_galaxy.html" target="_blank">Milky Way Galaxy</a></h1>
+  <p>Artist's concept of the Milky Way Galaxy. GLAST will provide detailed information on where stars are forming. Credit: NASA JPL</p>
 </div>
 
 <script>//<![CDATA[
@@ -463,10 +501,10 @@ function update(scale) {
 	for (i=0; i < result.length; i+=1) {
 		let el = result[i];
     let el_power = Number(el.dataset.power);
-		if (el_power < scale-3 || el_power > scale+1) {
+		if (el_power < scale-3 || el_power > scale+2) {
 			el.setAttribute('style', '');
 		} else {
-			let op = Math.min(3+el_power-scale, 1, scale-el_power+1);
+			let op = Math.min(3+el_power-scale, 1, scale-el_power+2);
 			el.setAttribute('style', `display: initial; opacity:${op};`);
 			el.setAttribute('transform', `scale(${10 ** (el_power-scale)})`);
 		}
