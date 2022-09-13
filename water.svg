@@ -1,0 +1,40 @@
+<svg viewBox="-1 -1 2 2" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+      <radialGradient id="grad_red">
+        <stop offset="10%" stop-color="red" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="red" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="grad_grey">
+        <stop offset="10%" stop-color="grey" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="grey" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+   <rect x="-0.5" y="-0.5" width="1" height="1" stroke-width="0.005" stroke="darkgrey" fill="white"/>
+   <text x="-0.5" y="-0.51" font-size="0.04" fill="darkgrey">10<tspan dy="-0.02" font-size="0.03">-9</tspan><tspan dy="0.02">meters - 1 nm</tspan></text>
+
+   <circle r="0.053" fill="lightgrey"/>
+   <text x="0" y="0.1" font-size="0.04" fill="blue" text-anchor="middle">Bohr radius of Hydrogen: 53pm</text>
+   <circle cx="0.1" r="0.032" fill="lightgrey"/>
+   <text x="0.1" y="0.15" font-size="0.04" fill="blue" text-anchor="middle">covalent radius of Hydrogen: 32pm</text>
+
+   <circle cx="-0.4" r="0.048" fill="red"/>
+   <text x="-0.4" y="-0.1" font-size="0.04" fill="red" text-anchor="middle">Bohr radius of Oxygen: 48pm</text>
+   <circle cx="-0.25" r="0.063" fill="red"/>
+   <text x="-0.25" y="-0.15" font-size="0.04" fill="red" text-anchor="middle">covalent radius of Oxygen: 63pm</text>
+
+   <g transform="translate(0, 0.3)" id="H2O">
+     <circle r="0.152" fill="url(#grad_red)"/>
+     <circle cx="0.0957" r="0.120" fill="url(#grad_grey)"/>
+     <circle cx="0.0957" r="0.120" fill="url(#grad_grey)" transform="rotate(104.5)"/>
+
+     <g style="display:none">
+     <circle r="0.063" fill="red"/>
+     <circle cx="0.0957" r="0.032" fill="lightgrey"/>
+     <circle cx="0.0957" r="0.032" fill="lightgrey" transform="rotate(104.5)"/>
+   </g>
+     <circle cx="0.02" r="0.192" fill="none" stroke-width="0.004" stroke="lightblue" transform="rotate(52.25)"/>
+   </g>
+
+   <use href="#H2O" transform="translate(0.31, 0.0)"/>
+ </svg>
